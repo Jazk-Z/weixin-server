@@ -1,0 +1,29 @@
+{
+  "name": "weixin-server",
+  "version": "1.0.0",
+  "description": "微信后端",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "pm2-start": "pm2 start ecosystem.config.js --env development",
+    "detele": "pm2 delete ecosystem.config.js && rm -rf logs/pm2/*.log"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jazk-Z/weixin-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jazk-Z/weixin-server/issues"
+  },
+  "homepage": "https://github.com/Jazk-Z/weixin-server#readme",
+  "dependencies": {
+    "koa": "^2.11.0",
+    "koa-router": "^8.0.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
