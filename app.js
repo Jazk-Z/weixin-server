@@ -1,6 +1,23 @@
 const Koa = require('koa')
-const app = new Koa()
+const cors = require('koa2-cors')
+const bodyparser = require('koa-bodyparser')
 const router = require('./routes')
+const app = new Koa()
+app.use(
+  cors({
+    origin: () => '*',
+    maxAge: 5,
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept']
+  })
+)
+app.use(
+  bodyparser({
+    enableTypes: ['json', 'form', 'text'],
+    jsonLimit: '50mb',
+    formLimit: '50mb',
+    textLimit: '50mb'
+  })
+)
 app.use(router.routes()).use(router.allowedMethods())
 
 app.listen(7777)

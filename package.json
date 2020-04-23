@@ -21,7 +21,9 @@
   "homepage": "https://github.com/Jazk-Z/weixin-server#readme",
   "dependencies": {
     "koa": "^2.11.0",
-    "koa-router": "^8.0.8"
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^8.0.8",
+    "koa2-cors": "^2.0.6"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
