@@ -1,15 +1,14 @@
 const Router = require('koa-router')
 const router = new Router({
-  prefix: '/git',
+  prefix: '/git'
 })
 router.post('/push', (ctx, next) => {
-  console.log('method Post', JSON.stringify(ctx, null, '\n'))
-  console.log(ctx.body)
+  const gitInfo = ctx.request.body
+  console.log(`-------------------------------------------`)
+  console.log(gitInfo)
+  console.log(`-------------------------------------------`)
   ctx.body = {
-    ok: true
+    ok: ctx.request.body
   }
-})
-router.get('/push', (ctx, next) => {
-  console.log('method GET', JSON.stringify(ctx, null, '\n'))
 })
 module.exports = router
