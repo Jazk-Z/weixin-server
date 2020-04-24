@@ -1,14 +1,11 @@
 const Router = require('koa-router')
+const {
+  encryptGitAuthorization,
+  handleWebHookPushEvent
+} = require('../../controller/webHookContr')
 const router = new Router({
   prefix: '/git'
 })
-router.post('/push', (ctx, next) => {
-  const gitInfo = ctx.request.body
-  console.log(`-------------------------------------------`)
-  console.log(gitInfo)
-  console.log(`-------------------------------------------`)
-  ctx.body = {
-    ok: ctx.request.body
-  }
-})
+router.post('/push', handleWebHookPushEvent)
+router.post('/encrypt', encryptGitAuthorization)
 module.exports = router
