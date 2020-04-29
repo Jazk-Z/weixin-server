@@ -46,7 +46,7 @@ const handleWebHookPushEvent = async (ctx) => {
   const commitMessage = _.get(refInfo, 'commit.commit.message', '')
   const weekInfo = _.get(commitMessage.match(/week(\d+)/), '1', '')
   const username = _.chain(commitMessage.match(/\[name:([^\]]+)\]/))
-    .get('1', '测试')
+    .get('1', '张忠有')
     .trim()
   console.log(username)
   console.log(commitMessage)
@@ -59,7 +59,7 @@ const handleWebHookPushEvent = async (ctx) => {
   const groupId = _.chain(commitMessage.match(/\[group:([^\]]+)\]/))
     .get('1', '70组')
     .trim()
-  const commentsCreteInfo = `#学号:${studentId}\r\n#姓名:${username}\r\n#班级:${classId}\r\n#小组:${groupId}\r\n#作业&总结链接:${htmlUrl}/tree/master/week${weekInfo}`
+  const commentsCreteInfo = `#学号:${studentId}\r\n#姓名:${username}\r\n#班级:${classId}班\r\n#小组:${groupId}组\r\n#作业&总结链接:${htmlUrl}/tree/master/week${weekInfo}`
   // 存储用户当周信息
   const weekStatus = _.get(tokenInfo, 'weekStatus', []) || []
   console.log(`------------------>`)
