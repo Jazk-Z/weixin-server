@@ -10,11 +10,6 @@ const reposRef = 'master'
 const issuesPath = `/repos/${reposOwner}/${reposName}/issues`
 const handleWebHookPushEvent = async (ctx) => {
   const gitInfo = ctx.request.body
-  console.log(`-------------------------------------------`)
-  console.log(gitInfo)
-  console.log(gitInfo.repository)
-  console.log(gitInfo.repository)
-  console.log(`-------------------------------------------`)
   // 获取分支信息
   const fullName = _.get(
     gitInfo,
@@ -32,7 +27,6 @@ const handleWebHookPushEvent = async (ctx) => {
       githubName: owner
     }
   })
-  console.log(tokenInfo)
   ctx.assert(
     tokenInfo,
     401,
@@ -40,8 +34,6 @@ const handleWebHookPushEvent = async (ctx) => {
   )
   const authorization = _.get(tokenInfo, 'authorization', '')
   const github_token = await privateDecrypt(authorization)
-  console.log(github_token)
-  console.log(fullName)
   // 获取commit info信息
   const refPath = `/repos/${fullName}/branches/${reposRef}`
   const { data: refInfo } = await get(
@@ -51,12 +43,13 @@ const handleWebHookPushEvent = async (ctx) => {
       Authorization: `token ${github_token}`
     }
   )
-  console.log(refInfo)
   const commitMessage = _.get(refInfo, 'commit.commit.message', '')
   const weekInfo = _.get(commitMessage.match(/week(\d+)/), '1', '')
   const username = _.chain(commitMessage.match(/\[name:([^\]]+)\]$/))
     .get('1', '测试')
     .trim()
+  console.log(username)
+  console.log(commitMessage)
   const studentId = _.chain(commitMessage.match(/\[id:([^\]]+)\]$/))
     .get('1', '11111111')
     .trim()
@@ -70,12 +63,12 @@ const handleWebHookPushEvent = async (ctx) => {
   // 存储用户当周信息
   const weekStatus = _.get(tokenInfo, 'weekStatus', []) || []
   console.log(`------------------>`)
-  console.log(weekStatus)
+  console.log(commentsCreteInfo)
+  console.log(weekInfo)
   const userId = _.get(tokenInfo, 'id', '')
   const currentWeekStatus = _.find(weekStatus, (v) => v === Number(weekInfo))
   if (currentWeekStatus) return (ctx.body = { ok: true })
   weekStatus.push(weekInfo)
-  console.log(`------------------>`)
   console.log(weekStatus)
   const a = await GitAuthToken.update(
     { weekStatus: weekStatus },
@@ -85,9 +78,6 @@ const handleWebHookPushEvent = async (ctx) => {
       }
     }
   )
-  console.log(`------------------>`)
-
-  console.log(a)
   // 获取issue列表
   const { data: issuesList } = await get(
     issuesPath,
